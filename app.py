@@ -6,15 +6,15 @@ from uuid import uuid4
 
 app = Flask(__name__)
 
-clientes = [
-    {'id': 1, 'nome': 'Fulano', 'email': 'fulano@email.com', 'telefone': '123123'},
-    {'id': 2, 'nome': 'Ciclano', 'email': 'ciclano@email.com', 'telefone': '432423'},
-    {'id': 3, 'nome': 'Beltrano', 'email': 'beltrano@email.com', 'telefone': '6456456'},
+games = [
+    {'id': 1, 'nome': 'Red Dead Redemption 2', 'comentario': 'Perfeito com gráficos maravilhosos', 'avaliacao': '9.8'},
+    {'id': 2, 'nome': 'Borderlands 3', 'comentario': 'Bom mas paia', 'avaliacao': '8.7'},
+    {'id': 3, 'nome': 'Cyberpunk 2077', 'comentario': 'Jogo ruim KKKKKKK', 'avaliacao': '6.5'},
 ]
 
 @app.route('/')
 def index():
-    return render_template('index.html', clientes=clientes)
+    return render_template('index.html', games=games)
 
 @app.route('/create')
 def create():
@@ -23,10 +23,10 @@ def create():
 @app.route('/save', methods=['POST'])
 def save():
     nome = request.form['nome']         # <input name="nome" ...
-    email = request.form['email']       # Sempre será uma string!
-    telefone = request.form['telefone']
-    clientes.append({"id": uuid4(), "nome": nome, "email": email, "telefone": telefone})
-    return render_template('index.html', clientes=clientes)
+    comentario = request.form['comentario']       # Sempre será uma string!
+    avaliacao = request.form['avaliacao']
+    games.append({"id": uuid4(), "nome": nome, "comentario": comentario, "avaliacao": avaliacao})
+    return render_template('index.html', games=games)
 
 # Trabalho Final da Disciplina:
 # Implementar o delete 

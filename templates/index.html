@@ -14,19 +14,19 @@
         <table class="table table-hover">
         <tr>
             <th>Nome</th>
-            <th>E-mail</th>
-            <th>Telefone</th>
+            <th>Comentário</th>
+            <th>Avaliação</th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
         </tr>
 
-        {% for cliente in clientes %}        
+        {% for jogo in games %}        
             <tr>
-                <td>{{cliente['nome']}}</td>
-                <td>{{cliente['email']}}</td>
-                <td>{{cliente['telefone']}}</td>
+                <td>{{jogo['nome']}}</td>
+                <td>{{jogo['comentario']}}</td>
+                <td>{{jogo['avaliacao']}}</td>
                 <td><a href="#" class="btn btn-sm btn-outline-success">Editar</a></td>
-                <td><a href="/delete/{{cliente['id']}}" class="btn btn-sm btn-danger">Apagar</a></td>
+                <td><a href="/delete/{{jogo['id']}}" class="btn btn-sm btn-danger">Apagar</a></td>
             </tr>
         {% endfor %}
 
