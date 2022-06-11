@@ -3,6 +3,7 @@
 
 from flask import Flask, render_template, request
 from uuid import uuid4
+import csv 
 
 app = Flask(__name__)
 
@@ -12,8 +13,13 @@ games = [
     {'id': 3, 'nome': 'Cyberpunk 2077', 'comentario': 'Jogo ruim KKKKKKK', 'avaliacao': '6.5'},
 ]
 
+
 @app.route('/')
 def index():
+    with open('games.csv', 'rt') as file_in:
+        leitor = csv.reader(file_in)
+        for linha in leitor:
+            print(linha)
     return render_template('index.html', games=games)
 
 @app.route('/create')
@@ -26,6 +32,10 @@ def save():
     comentario = request.form['comentario']       # Sempre será uma string!
     avaliacao = request.form['avaliacao']
     games.append({"id": uuid4(), "nome": nome, "comentario": comentario, "avaliacao": avaliacao})
+
+    with open('games.csv', 'wt') as file_out:
+     escritor = csv.writer(file_out)
+     escritor.writerows(games)
     return render_template('index.html', games=games)
 
 # Trabalho Final da Disciplina:
