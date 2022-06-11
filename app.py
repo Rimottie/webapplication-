@@ -1,25 +1,26 @@
 # Ao abrir o GitPod, execute:
 # pip install -r requirements.txt
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, redirect, request
 from uuid import uuid4
 import csv 
 
 app = Flask(__name__)
 
 games = [
-    {'id': 1, 'nome': 'Red Dead Redemption 2', 'comentario': 'Perfeito com gráficos maravilhosos', 'avaliacao': '9.8'},
-    {'id': 2, 'nome': 'Borderlands 3', 'comentario': 'Bom mas paia', 'avaliacao': '8.7'},
-    {'id': 3, 'nome': 'Cyberpunk 2077', 'comentario': 'Jogo ruim KKKKKKK', 'avaliacao': '6.5'},
+    {'id': uuid4(), 'jogo': 'Red Dead Redemption 2', 'comentario': 'Perfeito com gráficos maravilhosos', 'avaliacao': '9.8'},
+    {'id': uuid4(), 'jogo': 'Borderlands 3', 'comentario': 'Bom mas paia', 'avaliacao': '8.7'},
+    {'id': uuid4(), 'jogo': 'Cyberpunk 2077', 'comentario': 'Jogo ruim KKKKKKK', 'avaliacao': '6.5'},
 ]
 
+@app.route('/Inicio')
+def inicio():
+    with open('jogos.csv', 'wt') as file_out:
+        escritor = csv.writer(file_out, ['id', 'Jogo', 'Comentário', 'Avaliação'])
+        escritor.writerows(games)
 
-@app.route('/')
-def index():
-    with open('games.csv', 'rt') as file_in:
+    with open('jogos.csv', 'rt') as file_in:
         leitor = csv.reader(file_in)
-        for linha in leitor:
-            print(linha)
     return render_template('index.html', games=games)
 
 @app.route('/create')
@@ -28,33 +29,39 @@ def create():
 
 @app.route('/save', methods=['POST'])
 def save():
-    nome = request.form['nome']         # <input name="nome" ...
+    jogo = request.form['jogo']         # <input name="nome" ...
     comentario = request.form['comentario']       # Sempre será uma string!
     avaliacao = request.form['avaliacao']
-    games.append({"id": uuid4(), "nome": nome, "comentario": comentario, "avaliacao": avaliacao})
-
-    with open('games.csv', 'wt') as file_out:
-     escritor = csv.writer(file_out)
-     escritor.writerows(games)
+    games.append({"id": uuid4(), "jogo": jogo, "comentario": comentario, "avaliacao": avaliacao})
     return render_template('index.html', games=games)
 
-# Trabalho Final da Disciplina:
-# Implementar o delete 
-# Implementar o update (rota para mostrar os dados no form e outra para salvar os dados)
-# Salvar os dados, conforme forem sendo manipulados, em um arquivo CSV.
+@app.route('/edit/<id>')
+def edit(id):
+    for game in games:
+        if id == str(game['id']):
+            return render_template('update.html',game = game)
+
+@app.route('/edit/game/<id>', methods=['POST'])
+def salvar_edicao(id):
+    for game in games:
+        if (id == str(game['id'])):
+            i = games.index(game)
+            id_modificado = game['id']
+    n_jogo = request.form['Jogo']
+    n_comentario = request.form['Comentário']
+    n_avaliacao = request.form['Avaliação']
+    games[i] = {'id':id_modificado,'Jogo':n_jogo,'Cometário':n_comentario,'Avaliação':n_avaliacao}
+    return redirect('/Inicio')
 
 @app.route('/delete/<id>')
 def delete(id):
-    return id
-
-@app.route('/update/<id>')
-def update(id):
-    return id
+    for game in games:
+        if (id == str(game['id'])):
+            i = games.index(game)
+            del games[i]
+            return redirect('\Inicio')
 
 app.run(debug=True)
-
-
-
 
 
 # CLIENTE -- SERVIDOR
@@ -81,5 +88,3 @@ app.run(debug=True)
 # PUT    (U)PDATE
 # PATCH  (U)PDATE PARCIAL
 # DELETE (D)ELETE
-
-

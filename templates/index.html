@@ -9,26 +9,24 @@
 </head>
 <body>
 
-    <img scr="imagens/fofoca.jpg" alt="Jogo mamao" class="img-thumbnail">
-
     <div class="container-fluid">
 
         <table class="table table-hover">
         <tr>
-            <th>Nome</th>
+            <th>Jogo</th>
             <th>Comentário</th>
             <th>Avaliação</th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
         </tr>
 
-        {% for jogo in games %}        
+        {% for game in games %}        
             <tr>
-                <td>{{jogo['nome']}}</td>
-                <td>{{jogo['comentario']}}</td>
-                <td>{{jogo['avaliacao']}}</td>
+                <td>{{game['jogo']}}</td>
+                <td>{{game['comentario']}}</td>
+                <td>{{game['avaliacao']}}</td>
                 <td><a href="#" class="btn btn-sm btn-outline-success">Editar</a></td>
-                <td><a href="/delete/{{jogo['id']}}" class="btn btn-sm btn-danger">Apagar</a></td>
+                <td><a href="/delete/{{game['id']}}" class="btn btn-sm btn-danger">Apagar</a></td>
             </tr>
         {% endfor %}
 
