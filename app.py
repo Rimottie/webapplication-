@@ -58,7 +58,7 @@ def save_edit(id):
     edit_avaliacao = request.form['Avaliação']
 
     games[i] = {'id':edit_id,'Jogo':edit_jogo,'Cometário':edit_comentario,'Avaliação':edit_avaliacao}
-    return redirect('/Inicio')
+    return redirect('/index.html')
 
 @app.route('/delete/<id>')
 def delete(id):
@@ -67,6 +67,9 @@ def delete(id):
             games.remove(game)
     return render_template('index.html', games=games)
 
+@app.route('/update/<id>')
+def update(id):
+    return render_template('update.html', games=games)
 app.run(debug=True)
 
 

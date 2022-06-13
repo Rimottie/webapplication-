@@ -25,7 +25,7 @@
                 <td>{{game['jogo']}}</td>
                 <td>{{game['comentario']}}</td>
                 <td>{{game['avaliacao']}}</td>
-                <td><a href="#" class="btn btn-sm btn-outline-success">Editar</a></td>
+                <td><a href="/update/{{game['id']}}" class="btn btn-sm btn-success">Editar</a></td>
                 <td><a href="/delete/{{game['id']}}" class="btn btn-sm btn-danger">Apagar</a></td>
             </tr>
         {% endfor %}
