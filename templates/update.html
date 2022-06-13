@@ -8,9 +8,9 @@
     <title>Análise dos Jogos</title>
 </head>
 <body>
-    <h1 class = "text-center"> Editar informações  </h1>
+    <h1 class = "text-center">Editar informações</h1>
     <div class="container">
-        <form action="/edit/game/{{games['id']}}" method="POST">
+        <form action="/edit/game/{{game['id']}}" method="POST">
             <div class="form-group">
                 <label> Adicionar jogo </label>
                 <input type="text" name="Jogo" value ="{{game['Jogo']}}" required = "true" class="form-control"/>
@@ -21,7 +21,7 @@
             </div>
             <div class="form-group">
                 <label>Nova avaliação</label>
-                <input type="text" name="Avaliação" value ="{{game['avaliacao']}}" required = "true" class="form-control"/>
+                <input type="text" name="Avaliação" value ="{{game['Avaliação']}}" required = "true" class="form-control"/>
             </div>
             <br>
             <button class="btn btn-primary">Salvar Alterações </button>
