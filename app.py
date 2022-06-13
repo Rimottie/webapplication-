@@ -13,14 +13,8 @@ games = [
     {'id': uuid4(), 'jogo': 'Cyberpunk 2077', 'comentario': 'Jogo ruim KKKKKKK', 'avaliacao': '6.5'},
 ]
 
-@app.route('/Inicio')
-def inicio():
-    with open('jogos.csv', 'wt') as file_out:
-        escritor = csv.writer(file_out, ['id', 'Jogo', 'Comentário', 'Avaliação'])
-        escritor.writerows(games)
-
-    with open('jogos.csv', 'rt') as file_in:
-        leitor = csv.reader(file_in)
+@app.route('/')
+def index():
     return render_template('index.html', games=games)
 
 @app.route('/create')
@@ -39,7 +33,8 @@ def save():
 def edit(id):
     for game in games:
         if id == str(game['id']):
-            return render_template('update.html',game = game)
+            game = game
+    return render_template('update.html',game = game)
 
 @app.route('/edit/game/<id>', methods=['POST'])
 def salvar_edicao(id):
@@ -57,9 +52,8 @@ def salvar_edicao(id):
 def delete(id):
     for game in games:
         if (id == str(game['id'])):
-            i = games.index(game)
-            del games[i]
-            return redirect('\Inicio')
+            games.remove(game)
+    return render_template('index.html', games=games)
 
 app.run(debug=True)
 
