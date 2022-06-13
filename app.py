@@ -15,7 +15,10 @@ games = [
 
 @app.route('/')
 def index():
-    return render_template('index.html', games=games)
+      with open('jogos.csv', 'wt') as file_out:
+        escritor = csv.writer(file_out)
+        escritor.writerows(games)
+        return render_template('index.html', games=games)
 
 @app.route('/create')
 def create():
@@ -27,14 +30,17 @@ def save():
     comentario = request.form['comentario']       # Sempre será uma string!
     avaliacao = request.form['avaliacao']
     games.append({"id": uuid4(), "jogo": jogo, "comentario": comentario, "avaliacao": avaliacao})
-    return render_template('index.html', games=games)
+    with open('jogos.csv', 'wt') as file_out:
+        escritor = csv.writer(file_out)
+        escritor.writerows(games)
+        return render_template('index.html', games=games)
 
 @app.route('/edit/<id>')
 def edit(id):
     for game in games:
-        if id == str(game['id']):
-            game = game
-    return render_template('update.html',game = game)
+        if (id == str(game['id'])):
+            games.update(game)
+    return render_template('update.html', games = games)
 
 @app.route('/edit/game/<id>', methods=['POST'])
 def salvar_edicao(id):
@@ -42,10 +48,10 @@ def salvar_edicao(id):
         if (id == str(game['id'])):
             i = games.index(game)
             id_modificado = game['id']
-    n_jogo = request.form['Jogo']
-    n_comentario = request.form['Comentário']
-    n_avaliacao = request.form['Avaliação']
-    games[i] = {'id':id_modificado,'Jogo':n_jogo,'Cometário':n_comentario,'Avaliação':n_avaliacao}
+    edit_jogo = request.form['Jogo']
+    edit_comentario = request.form['Comentário']
+    edit_avaliacao = request.form['Avaliação']
+    games[i] = {'id':id_modificado,'Jogo':edit_jogo,'Cometário':edit_comentario,'Avaliação':edit_avaliacao}
     return redirect('/Inicio')
 
 @app.route('/delete/<id>')
