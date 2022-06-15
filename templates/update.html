@@ -5,24 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <title>Análise dos Jogos</title>
+    <title> Análise dos jogos </title>
 </head>
 <body>
+    <h1 class = "text-center"> Alterar informação do jogo </h1>
     <div class="container">
-        <form action="/save" method="POST">
+        <form action="/edit/game/{{game['id']}}" method="POST">
             <div class="form-group">
-                <label>Jogo</label>
-                <input type="text" name="jogo" class="form-control"/>
+                <label> Alterar jogo </label>
+                <input type="text" name="jogo" value ="{{game['jogo']}}" required = "true" class="form-control"/>
             </div>
             <div class="form-group">
-                <label>Comentário</label>
-                <input type="text" name="comentario" required="true"  class="form-control"/>
+                <label> Editar comentário </label>
+                <input type="text" name="comentario" value ="{{game['comentario']}}" required="true"  class="form-control"/>
             </div>
             <div class="form-group">
-                <label>Avaliação</label>
-                <input type="text" name="avaliacao" class="form-control"/>
+                <label> Mudar avaliação </label>
+                <input type="text" name="avaliacao" value ="{{game['avaliacao']}}" required = "true" class="form-control"/>
             </div>
-            <button class="btn btn-primary" style="margin-top: 20px">Editar</button>
+            <br>
+            <button class="btn btn-primary"> Salvar Alterações </button>
         </form>
     </div>
 </body>

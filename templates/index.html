@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <title>Index</title>
+    <title> Index </title>
 </head>
 <body>
 
@@ -13,9 +13,9 @@
 
         <table class="table table-hover">
         <tr>
-            <th>Jogo</th>
-            <th>Comentário</th>
-            <th>Avaliação</th>
+            <th> Jogo </th>
+            <th> Comentário </th>
+            <th> Avaliação </th>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
         </tr>
@@ -25,14 +25,14 @@
                 <td>{{game['jogo']}}</td>
                 <td>{{game['comentario']}}</td>
                 <td>{{game['avaliacao']}}</td>
-                <td><a href="/update/{{game['id']}}" class="btn btn-sm btn-success">Editar</a></td>
-                <td><a href="/delete/{{game['id']}}" class="btn btn-sm btn-danger">Apagar</a></td>
+                <td><a href="/edit/{{game['id']}}" class="btn btn-sm btn-success"> Editar </a></td>
+                <td><a href="/delete/{{game['id']}}" class="btn btn-sm btn-danger"> Apagar </a></td>
             </tr>
         {% endfor %}
 
         </table>
 
-        <a href="/create" class="btn btn-primary">Adicionar</a>
+        <a href="/create" class="btn btn-primary"> Adicionar </a>
 
     </div>
 

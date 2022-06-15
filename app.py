@@ -15,11 +15,15 @@ games = [
 
 @app.route('/')
 def index():
-      with open('jogos.csv', 'wt') as file_out:
-          
-        escritor = csv.writer(file_out)
+    with open('jogos.csv', 'wt') as file_out:
+        escritor = csv.DictWriter(file_out, ['id', 'jogo', 'comentario', 'avaliacao'])
+        escritor.writeheader()
         escritor.writerows(games)
-        return render_template('index.html', games=games)
+
+    with open('jogos.csv', 'rt') as file_out:
+        leitor = csv.DictReader(file_out)
+
+    return render_template('index.html', games = games)
 
 @app.route('/create')
 def create():
@@ -27,73 +31,39 @@ def create():
 
 @app.route('/save', methods=['POST'])
 def save():
-    jogo = request.form['jogo']         # <input name="nome" ...
-    comentario = request.form['comentario']       # Sempre será uma string!
+    jogo = request.form['jogo']
+    comentario = request.form['comentario']
     avaliacao = request.form['avaliacao']
-
     games.append({"id": uuid4(), "jogo": jogo, "comentario": comentario, "avaliacao": avaliacao})
-    with open('jogos.csv', 'wt') as file_out:
-        escritor = csv.writer(file_out)
-        escritor.writerows(games)
-        return render_template('index.html', games=games)
+
+    return render_template('index.html', games = games)
 
 @app.route('/edit/<id>')
 def edit(id):
     for game in games:
-
-        if (id == str(game['id'])):
-            game.update(game)
-    return render_template('update.html', games=games)
+        if id == str(game['id']):
+            return render_template('update.html', game = game)
 
 @app.route('/edit/game/<id>', methods=['POST'])
-def save_edit(id):
+def salvar_edicao(id):
     for game in games:
-
         if (id == str(game['id'])):
-            i = games.index(game)
+            n = games.index(game)
             edit_id = game['id']
+            
+    edit_jogo = request.form['jogo']
+    edit_comentario = request.form['comentario']
+    edit_avaliacao = request.form['avaliacao']
+    games[n] = {'id': edit_id, 'jogo': edit_jogo, 'comentario': edit_comentario, 'avaliacao': edit_avaliacao}
 
-    edit_jogo = request.form['Jogo']
-    edit_comentario = request.form['Comentário']
-    edit_avaliacao = request.form['Avaliação']
-
-    games[i] = {'id':edit_id,'Jogo':edit_jogo,'Cometário':edit_comentario,'Avaliação':edit_avaliacao}
-    return redirect('/index.html')
+    return redirect('/')
 
 @app.route('/delete/<id>')
 def delete(id):
     for game in games:
         if (id == str(game['id'])):
-            games.remove(game)
-    return render_template('index.html', games=games)
+            n = games.index(game)
+            del games[n]
+            return redirect('/')
 
-@app.route('/update/<id>')
-def update(id):
-    return render_template('update.html', games=games)
 app.run(debug=True)
-
-
-# CLIENTE -- SERVIDOR
-# Navegador -- AWS (Flask)
-
-# Client -> REQUEST (Mensagem HTTP) -> Server 
-# Server -> RESPONSE (Mensagem HTTP) -> CLIENTE
-
-# HTTP (HyperText Transfer Protocol)
-# HTML (HyperText Markup Language)
-
-# Mensagem HTTP: 
-# Header
-# Body
-# METHOD (GET, POST), Métodos suportados pelos navegadores.
-# GET -> DADOS PELA URL
-# POST -> OCULTO OS DADOS (NÃO MOSTRA NA URL)
-
-# METHOD (API = GET, POST, PUT, DELETE, PATCH, OPTIONS)
-
-# API REST
-# POST   (C)REATE
-# GET    (R)EAD
-# PUT    (U)PDATE
-# PATCH  (U)PDATE PARCIAL
-# DELETE (D)ELETE
