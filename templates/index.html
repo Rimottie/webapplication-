@@ -23,7 +23,9 @@
         {% for row in games %}    
            
             <tr>
-                <td>{{row['jogo']}}</td>
+                <td>
+                    <img src="https://cdn-icons-png.flaticon.com/512/1779/1779215.png" width="60px">
+                    {{row['jogo']}}</td> 
                 <td>{{row['comentario']}}</td>
                 <td>{{row['avaliacao']}}</td>
                 <td><a href="/edit/{{row['id']}}" class="btn btn-sm btn-success"> Editar </a></td>
